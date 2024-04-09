@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion 30
+    namespace 'androidx.test.runner.AndroidJUnitRunner'
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    signingConfigs {
+      debugSigningConfig {
+        (keyAlias, keyPassword, storePassword) = [project.rootProject.keyAlias, project.rootProject.keyPassword, project.rootProject.storePassword]
+        storeFile project.file("$project.rootDir/$project.rootProject.storeFilePath")
+        v1SigningEnabled true
+        v2SigningEnabled true
+      }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debugSigningConfig
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+dependencies {
+    api project(':retrofit')
+    api 'com.android.volley:volley:1.2.1'
+    api "androidx.annotation:annotation:1.2.0"
+    compileOnly libs.findBugsAnnotations
+
+    testImplementation libs.junit
+    testImplementation libs.mockwebserver
+}

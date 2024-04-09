@@ -1,6 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'org.jetbrains.kotlin.jvm'
-apply plugin: 'com.vanniktech.maven.publish'
+//apply plugin: 'com.vanniktech.maven.publish'
 
 def addMultiReleaseSourceSet(int version) {
   def sourceSet = sourceSets.create("java$version")
@@ -52,3 +52,13 @@ jar {
     attributes 'Multi-Release': 'true'
   }
 }
+
+//apply plugin: "io.github.jamesfchen.module-publisher-plugin"
+//publish {
+//  name = "retrofit"
+//  groupId = rootProject.groupId
+//  artifactId = "retrofit"
+//  version = "1.0.0"
+//  website = "https://github.com/electrolyteJ/super-retrofit"
+//}
+

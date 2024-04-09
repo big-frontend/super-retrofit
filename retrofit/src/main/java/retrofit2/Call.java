@@ -17,7 +17,10 @@ package retrofit2;
 
 import java.io.IOException;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
 import okio.Timeout;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * An invocation of a Retrofit method that sends a request to a webserver and returns a response.
@@ -78,4 +81,8 @@ public interface Call<T> extends Cloneable {
    * retries all must complete within one timeout period.
    */
   Timeout timeout();
+
+  interface Factory {
+    <T> Call<T> newCall(Object instance, @Nonnull RequestFactory requestFactory, @Nullable Object[] args, @Nonnull Converter<ResponseBody, T> responseConverter);
+  }
 }

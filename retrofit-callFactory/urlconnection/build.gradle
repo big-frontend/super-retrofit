@@ -1,0 +1,26 @@
+apply plugin: 'java-library'
+dependencies {
+
+    api project(':retrofit')
+    compileOnly libs.findBugsAnnotations
+    testImplementation libs.junit
+    testImplementation libs.mockwebserver
+}
+jar {
+    manifest {
+        attributes  'Automatic-Module-Name': 'retrofit2.callFactory.urlconnection'
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+//apply plugin: "io.github.jamesfchen.module-publisher-plugin"
+//publish {
+//  name = "callFactory-urlconnection"
+//  groupId = rootProject.groupId
+//  artifactId = "callFactory-urlconnection"
+//  version = "1.0.0"
+//  website = "https://github.com/electrolyteJ/super-retrofit"
+//}

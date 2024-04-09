@@ -1,8 +1,13 @@
 import net.ltgt.gradle.errorprone.CheckSeverity
 
 buildscript {
+  ext {
+    kotlin_version = '1.6.20'
+  }
   dependencies {
     classpath libs.androidPlugin
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "io.github.jamesfchen:module-publisher-plugin:1.4.5"
     classpath libs.kotlin.gradlePlugin
     classpath libs.kotlin.serializationPlugin
     classpath libs.dokkaPlugin

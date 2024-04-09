@@ -44,6 +44,10 @@ include ':retrofit-converters:scalars'
 include ':retrofit-converters:simplexml'
 include ':retrofit-converters:wire'
 
+include ':retrofit-callFactory:volley'
+include ':retrofit-callFactory:urlconnection'
+//include ':retrofit-callFactory:cronet'
 include ':samples'
 
 enableFeaturePreview('TYPESAFE_PROJECT_ACCESSORS')
+include ':androidsamples'

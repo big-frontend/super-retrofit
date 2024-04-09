@@ -937,10 +937,10 @@ public final class RetrofitTest {
 
   @Test
   public void callFactoryPropagated() {
-    okhttp3.Call.Factory callFactory =
-        request -> {
+    Call.Factory callFactory =
+        OkHttpCallFactory.create(request -> {
           throw new AssertionError();
-        };
+        });
     Retrofit retrofit =
         new Retrofit.Builder().baseUrl("http://example.com/").callFactory(callFactory).build();
     assertThat(retrofit.callFactory()).isSameInstanceAs(callFactory);

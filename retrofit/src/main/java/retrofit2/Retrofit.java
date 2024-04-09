@@ -77,7 +77,7 @@ public final class Retrofit {
    */
   private final ConcurrentHashMap<Method, Object> serviceMethodCache = new ConcurrentHashMap<>();
 
-  final okhttp3.Call.Factory callFactory;
+  final Call.Factory callFactory;
   final HttpUrl baseUrl;
   final List<Converter.Factory> converterFactories;
   final int defaultConverterFactoriesSize;
@@ -87,7 +87,7 @@ public final class Retrofit {
   final boolean validateEagerly;
 
   Retrofit(
-      okhttp3.Call.Factory callFactory,
+      Call.Factory callFactory,
       HttpUrl baseUrl,
       List<Converter.Factory> converterFactories,
       int defaultConverterFactoriesSize,
@@ -266,7 +266,7 @@ public final class Retrofit {
    * The factory used to create {@linkplain okhttp3.Call OkHttp calls} for sending a HTTP requests.
    * Typically an instance of {@link OkHttpClient}.
    */
-  public okhttp3.Call.Factory callFactory() {
+  public Call.Factory callFactory() {
     return callFactory;
   }
 
@@ -481,7 +481,7 @@ public final class Retrofit {
    * optional.
    */
   public static final class Builder {
-    private @Nullable okhttp3.Call.Factory callFactory;
+    private @Nullable Call.Factory callFactory;
     private @Nullable HttpUrl baseUrl;
     private final List<Converter.Factory> converterFactories = new ArrayList<>();
     private final List<CallAdapter.Factory> callAdapterFactories = new ArrayList<>();
@@ -530,6 +530,11 @@ public final class Retrofit {
      * <p>Note: Calling {@link #client} automatically sets this value.
      */
     public Builder callFactory(okhttp3.Call.Factory factory) {
+      this.callFactory = OkHttpCallFactory.create(Objects.requireNonNull(factory, "factory == null"));
+      return this;
+    }
+
+    public Builder callFactory(Call.Factory factory) {
       this.callFactory = Objects.requireNonNull(factory, "factory == null");
       return this;
     }
@@ -671,9 +676,9 @@ public final class Retrofit {
         throw new IllegalStateException("Base URL required.");
       }
 
-      okhttp3.Call.Factory callFactory = this.callFactory;
+      Call.Factory callFactory = this.callFactory;
       if (callFactory == null) {
-        callFactory = new OkHttpClient();
+        callFactory = OkHttpCallFactory.create();
       }
 
       Executor callbackExecutor = this.callbackExecutor;
